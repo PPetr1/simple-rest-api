@@ -13,8 +13,9 @@ public class Person {
   private long id;
 
   private String name;
+  @Temporal(TemporalType.DATE)
   private Date birthday;
-  @Enumerated
+  @Enumerated(EnumType.STRING)
   private Gender gender;
 
   public Person() {}
