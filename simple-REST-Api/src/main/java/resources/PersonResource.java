@@ -8,12 +8,13 @@ import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import services.PersonService;
 
+@Path("/person")
 public class PersonResource {
 
   @EJB private PersonService personService;
 
   @POST
-  @Path("/createPerson")
+  @Path("/create")
   @Consumes(MediaType.APPLICATION_JSON)
   @Produces(MediaType.APPLICATION_JSON)
   public Response createPerson(CreatePersonRequestDTO requestDTO) {
