@@ -5,5 +5,6 @@
              version="3.0">
   <persistence-unit name="default">
 
+    <class>models.Person</class>
   </persistence-unit>
 </persistence>
