@@ -2,12 +2,12 @@ package dtos;
 
 import java.util.List;
 
-public class GetPeopleByNameResponseDTO {
+public class PersonResponseDTOList {
   private List<PersonResponseDTO> personResponseDTOList;
 
-  public GetPeopleByNameResponseDTO() {}
+  public PersonResponseDTOList() {}
 
-  public GetPeopleByNameResponseDTO(List<PersonResponseDTO> personResponseDTOList) {
+  public PersonResponseDTOList(List<PersonResponseDTO> personResponseDTOList) {
     this.personResponseDTOList = personResponseDTOList;
   }
 
