@@ -17,9 +17,8 @@ public class PersonResource {
   @Consumes(MediaType.APPLICATION_JSON)
   @Produces(MediaType.APPLICATION_JSON)
   public Response createPerson(CreatePersonRequestDTO requestDTO) {
-    personService.createPerson(requestDTO);
     return Response.status(200)
-        .entity(new ResponseMessageDTO("Person was successfully saved"))
+        .entity(personService.createPerson(requestDTO))
         .build();
   }
 

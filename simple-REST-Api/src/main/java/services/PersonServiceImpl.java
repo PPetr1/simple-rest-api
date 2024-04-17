@@ -23,9 +23,9 @@ public class PersonServiceImpl implements PersonService {
   private EntityManager entityManager;
 
   @Override
-  public void createPerson(CreatePersonRequestDTO requestDTO) {
+  public PersonResponseDTO createPerson(CreatePersonRequestDTO requestDTO) {
     validateCreatePersonRequestDTO(requestDTO);
-    savePersonQuery(
+    return savePersonQuery(
         new Person(
             requestDTO.getName(),
             birthdayStringParseToDate(requestDTO.getBirthday()),
@@ -34,8 +34,10 @@ public class PersonServiceImpl implements PersonService {
 
   @Override
   @Transactional
-  public void savePersonQuery(Person person) {
+  public PersonResponseDTO savePersonQuery(Person person) {
     entityManager.persist(person);
+    entityManager.flush();
+    return personToPersonResponseDTO(person);
   }
 
   @Override

@@ -11,10 +11,10 @@ import java.util.Optional;
 
 @Local
 public interface PersonService {
-  void createPerson(CreatePersonRequestDTO requestDTO);
+  PersonResponseDTO createPerson(CreatePersonRequestDTO requestDTO);
 
   @Transactional
-  void savePersonQuery(Person person);
+  PersonResponseDTO savePersonQuery(Person person);
 
   void validateCreatePersonRequestDTO(CreatePersonRequestDTO requestDTO);
 
