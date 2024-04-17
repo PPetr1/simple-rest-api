@@ -2,6 +2,7 @@ package resources;
 
 import dtos.CreatePersonRequestDTO;
 import dtos.DeletePersonRequestDTO;
+import dtos.GetPersonForNameRequestDTO;
 import dtos.ResponseMessageDTO;
 import jakarta.ejb.EJB;
 import jakarta.ws.rs.*;
@@ -33,5 +34,13 @@ public class PersonResource {
     personService.deletePerson(requestDTO);
     return Response.status(200).entity(new ResponseMessageDTO("Person was successfully deleted"))
             .build();
+  }
+
+  @GET
+  @Path("/getPersonForName")
+  @Consumes(MediaType.APPLICATION_JSON)
+  @Produces(MediaType.APPLICATION_JSON)
+  public Response getPersonForName(GetPersonForNameRequestDTO requestDTO) {
+    return Response.status(200).entity(personService.getPersonForName(requestDTO)).build();
   }
 }
