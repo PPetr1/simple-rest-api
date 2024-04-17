@@ -174,6 +174,7 @@ public class PersonServiceImpl implements PersonService {
   @Override
   public PersonResponseDTO personToPersonResponseDTO(Person person) {
     return new PersonResponseDTO(
+        person.getId(),
         person.getName(),
         person.getGender().toString(),
         birthdayFixResponseFormat(person.getBirthday().toString()));
