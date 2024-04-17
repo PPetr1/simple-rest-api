@@ -22,21 +22,25 @@ public class PersonService {
   @PersistenceContext(name = "PersonManager")
   private EntityManager entityManager;
 
-  @Transactional
   public void createPerson(CreatePersonRequestDTO requestDTO) {
     validateCreatePersonRequestDTO(requestDTO);
-    entityManager.persist(
+    savePersonQuery(
         new Person(
             requestDTO.getName(),
             birthdayStringParseToDate(requestDTO.getBirthday()),
             Gender.valueOf(requestDTO.getGender().toUpperCase())));
   }
 
+  @Transactional
+  public void savePersonQuery(Person person) {
+    entityManager.persist(person);
+  }
+
   void validateCreatePersonRequestDTO(CreatePersonRequestDTO requestDTO) {
     if (requestDTO.getName() == null
         || requestDTO.getGender() == null
         || requestDTO.getBirthday() == null) {
-      throw new ApiBadRequestException("Missing field");
+      throwMissingField();
     }
     validateNameFormat(requestDTO.getName());
     validateBirthdayFormat(requestDTO.getBirthday());
@@ -97,16 +101,30 @@ public class PersonService {
     return Pattern.compile("^[a-zA-Z ěĚšŠčČřŘžŽýÝáÁíÍéÉůŮúÚöÖ]+$").matcher(name).matches();
   }
 
-  @Transactional
   public void deletePerson(DeletePersonRequestDTO requestDTO) {
-    Optional<Person> optionalPerson =
-        Optional.ofNullable(entityManager.find(Person.class, requestDTO.getPersonId()));
+    validateDeletePersonRequestDTO(requestDTO);
+    Optional<Person> optionalPerson = findPersonById(requestDTO.getPersonId());
     if (optionalPerson.isPresent()) {
-      entityManager.remove(optionalPerson.get());
+      deletePersonQuery(optionalPerson.get());
     } else {
-      throw new ApiBadRequestException(
-          "Provided personId: " + requestDTO.getPersonId() + " doesn't exist");
+      throwProvideValidPersonId();
     }
+  }
+
+  @Transactional
+  void deletePersonQuery(Person person) {
+    entityManager.remove(person);
+  }
+
+  void validateDeletePersonRequestDTO(DeletePersonRequestDTO requestDTO) {
+    if (requestDTO.getPersonId() == 0) {
+      throw new ApiBadRequestException("Please provide valid personId");
+    }
+  }
+
+  @Transactional
+  Optional<Person> findPersonById(long personId) {
+    return Optional.ofNullable(entityManager.find(Person.class, personId));
   }
 
   public Object getPersonForName(GetPersonForNameRequestDTO requestDTO) {
@@ -177,6 +195,14 @@ public class PersonService {
     throw new ApiBadRequestException("name field is missing");
   }
 
+  void throwMissingField() {
+    throw new ApiBadRequestException("Missing field");
+  }
+
+  void throwProvideValidPersonId() {
+    throw new ApiBadRequestException("Please provide valid personId");
+  }
+
   public PersonResponseDTOList getAllPersons() {
     List<Person> personList = getAllPersonsQuery();
     validateGetAllPersonsResponse(personList);
@@ -192,5 +218,24 @@ public class PersonService {
   @Transactional
   List<Person> getAllPersonsQuery() {
     return entityManager.createQuery("SELECT p FROM Person p", Person.class).getResultList();
+  }
+
+  public void updatePerson(UpdatePersonRequestDTO requestDTO) {
+    validateUpdatePersonRequest(requestDTO);
+    Optional<Person> optionalPerson = findPersonById(requestDTO.getPersonId());
+    if (optionalPerson.isPresent()) {
+      Person person = optionalPerson.get();
+      person.setName(requestDTO.getName());
+      savePersonQuery(person);
+    } else {
+      throwProvideValidPersonId();
+    }
+  }
+
+  void validateUpdatePersonRequest(UpdatePersonRequestDTO requestDTO) {
+    if (requestDTO.getName() == null || requestDTO.getPersonId() == 0) {
+      throwMissingField();
+    }
+    validateNameFormat(requestDTO.getName());
   }
 }
