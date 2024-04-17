@@ -1,9 +1,6 @@
 package resources;
 
-import dtos.CreatePersonRequestDTO;
-import dtos.DeletePersonRequestDTO;
-import dtos.GetPersonForNameRequestDTO;
-import dtos.ResponseMessageDTO;
+import dtos.*;
 import jakarta.ejb.EJB;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
@@ -57,5 +54,14 @@ public class PersonResource {
   @Produces(MediaType.APPLICATION_JSON)
   public Response getAllPersons() {
     return Response.status(200).entity(personService.getAllPersons()).build();
+  }
+
+  @PUT
+  @Path("/updatePerson")
+  @Consumes(MediaType.APPLICATION_JSON)
+  @Produces(MediaType.APPLICATION_JSON)
+  public Response updatePerson(UpdatePersonRequestDTO requestDTO) {
+    personService.updatePerson(requestDTO);
+    return Response.status(200).entity(new ResponseMessageDTO("Person was updated successfully")).build();
   }
 }
