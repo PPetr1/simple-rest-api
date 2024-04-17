@@ -17,9 +17,7 @@ public class PersonResource {
   @Consumes(MediaType.APPLICATION_JSON)
   @Produces(MediaType.APPLICATION_JSON)
   public Response createPerson(CreatePersonRequestDTO requestDTO) {
-    return Response.status(200)
-        .entity(personService.createPerson(requestDTO))
-        .build();
+    return Response.status(200).entity(personService.createPerson(requestDTO)).build();
   }
 
   @DELETE
@@ -28,8 +26,9 @@ public class PersonResource {
   @Produces(MediaType.APPLICATION_JSON)
   public Response deletePerson(DeletePersonRequestDTO requestDTO) {
     personService.deletePerson(requestDTO);
-    return Response.status(200).entity(new ResponseMessageDTO("Person was successfully deleted"))
-            .build();
+    return Response.status(200)
+        .entity(new ResponseMessageDTO("Person was successfully deleted"))
+        .build();
   }
 
   @GET
@@ -61,6 +60,8 @@ public class PersonResource {
   @Produces(MediaType.APPLICATION_JSON)
   public Response updatePerson(UpdatePersonRequestDTO requestDTO) {
     personService.updatePerson(requestDTO);
-    return Response.status(200).entity(new ResponseMessageDTO("Person was updated successfully")).build();
+    return Response.status(200)
+        .entity(new ResponseMessageDTO("Person was updated successfully"))
+        .build();
   }
 }

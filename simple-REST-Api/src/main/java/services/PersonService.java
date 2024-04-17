@@ -3,11 +3,10 @@ package services;
 import dtos.*;
 import jakarta.ejb.Local;
 import jakarta.transaction.Transactional;
-import models.Person;
-
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
+import models.Person;
 
 @Local
 public interface PersonService {

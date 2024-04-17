@@ -1,8 +1,6 @@
 package dtos;
 
-import enums.Gender;
 
-import java.util.Date;
 
 public class PersonResponseDTO {
   private long id;

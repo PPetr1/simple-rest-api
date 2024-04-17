@@ -7,14 +7,13 @@ import jakarta.ejb.Stateless;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.transaction.Transactional;
-import models.Person;
-
 import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
+import models.Person;
 
 @Stateless
 public class PersonServiceImpl implements PersonService {
@@ -133,7 +132,7 @@ public class PersonServiceImpl implements PersonService {
   @Override
   public void validateDeletePersonRequestDTO(DeletePersonRequestDTO requestDTO) {
     if (requestDTO.getPersonId() == 0) {
-      throw new ApiBadRequestException("Please provide valid personId");
+      throwProvideValidPersonId();
     }
   }
 
@@ -242,7 +241,7 @@ public class PersonServiceImpl implements PersonService {
   @Override
   public void validateGetAllPersonsResponse(List<Person> personList) {
     if (personList.isEmpty()) {
-      throw new ApiBadRequestException("There are no people entities");
+      throw new ApiBadRequestException("There are no person entities");
     }
   }
 
