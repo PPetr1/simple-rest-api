@@ -3,19 +3,19 @@ package dtos;
 import java.util.List;
 
 public class PersonResponseDTOList {
-  private List<PersonResponseDTO> personResponseDTOList;
+  private List<PersonResponseDTO> people;
 
   public PersonResponseDTOList() {}
 
   public PersonResponseDTOList(List<PersonResponseDTO> personResponseDTOList) {
-    this.personResponseDTOList = personResponseDTOList;
+    this.people = personResponseDTOList;
   }
 
-  public List<PersonResponseDTO> getPersonResponseDTOList() {
-    return personResponseDTOList;
+  public List<PersonResponseDTO> getPeople() {
+    return people;
   }
 
-  public void setPersonResponseDTOList(List<PersonResponseDTO> personResponseDTOList) {
-    this.personResponseDTOList = personResponseDTOList;
+  public void setPeople(List<PersonResponseDTO> people) {
+    this.people = people;
   }
 }
