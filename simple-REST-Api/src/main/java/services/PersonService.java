@@ -148,26 +148,19 @@ public class PersonService {
     return arr[2] + "." + arr[1] + "." + arr[0];
   }
 
-  public GetPeopleByNameResponseDTO getPeopleByName(GetPersonForNameRequestDTO requestDTO) {
+  public PersonResponseDTOList getPeopleByName(GetPersonForNameRequestDTO requestDTO) {
     if (requestDTO.getName() == null) {
       throwNameFieldIsMissing();
     }
     validateNameFormat(requestDTO.getName());
     List<Person> personList = getPeopleByNameQuery(requestDTO.getName());
     validateGetPeopleByNameResponse(personList);
-    return personToGetPeopleByNameResponseDTO(personList);
+    return personListToPersonResponseDTOList(personList);
   }
 
-  private GetPeopleByNameResponseDTO personToGetPeopleByNameResponseDTO(List<Person> personList) {
-    return new GetPeopleByNameResponseDTO(
-        personList.stream()
-            .map(
-                person ->
-                    new PersonResponseDTO(
-                        person.getName(),
-                        person.getGender().toString(),
-                        birthdayFixResponseFormat(person.getBirthday().toString())))
-            .collect(Collectors.toList()));
+  private PersonResponseDTOList personListToPersonResponseDTOList(List<Person> personList) {
+    return new PersonResponseDTOList(
+        personList.stream().map(this::personToPersonResponseDTO).collect(Collectors.toList()));
   }
 
   void validateGetPeopleByNameResponse(List<Person> personList) {
@@ -182,5 +175,22 @@ public class PersonService {
 
   void throwNameFieldIsMissing() {
     throw new ApiBadRequestException("name field is missing");
+  }
+
+  public PersonResponseDTOList getAllPersons() {
+    List<Person> personList = getAllPersonsQuery();
+    validateGetAllPersonsResponse(personList);
+    return personListToPersonResponseDTOList(personList);
+  }
+
+  void validateGetAllPersonsResponse(List<Person> personList) {
+    if (personList.isEmpty()) {
+      throw new ApiBadRequestException("There are no people entities");
+    }
+  }
+
+  @Transactional
+  List<Person> getAllPersonsQuery() {
+    return entityManager.createQuery("SELECT p FROM Person p", Person.class).getResultList();
   }
 }
