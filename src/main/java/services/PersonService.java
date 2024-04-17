@@ -3,7 +3,8 @@ package services;
 import dtos.*;
 import jakarta.ejb.Local;
 import jakarta.transaction.Transactional;
-import java.util.Date;
+
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 import models.Person;
@@ -17,7 +18,7 @@ public interface PersonService {
 
   void validateCreatePersonRequestDTO(CreatePersonRequestDTO requestDTO);
 
-  Date birthdayStringParseToDate(String birthday);
+  LocalDate birthdayStringParseToLocalDate(String birthday);
 
   void validateGenderFormat(String gender);
 

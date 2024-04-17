@@ -8,7 +8,6 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.transaction.Transactional;
 import java.time.LocalDate;
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.regex.Pattern;
@@ -27,7 +26,7 @@ public class PersonServiceImpl implements PersonService {
     return savePersonQuery(
         new Person(
             requestDTO.getName(),
-            birthdayStringParseToDate(requestDTO.getBirthday()),
+            birthdayStringParseToLocalDate(requestDTO.getBirthday()),
             Gender.valueOf(requestDTO.getGender().toUpperCase())));
   }
 
@@ -52,10 +51,10 @@ public class PersonServiceImpl implements PersonService {
   }
 
   @Override
-  public Date birthdayStringParseToDate(String birthday) {
+  public LocalDate birthdayStringParseToLocalDate(String birthday) {
     String[] arr = birthday.split("\\.");
-    return java.sql.Date.valueOf(
-        LocalDate.of(Integer.parseInt(arr[2]), Integer.parseInt(arr[1]), Integer.parseInt(arr[0])));
+    return LocalDate.of(
+        Integer.parseInt(arr[2]), Integer.parseInt(arr[1]), Integer.parseInt(arr[0]));
   }
 
   @Override
@@ -83,8 +82,7 @@ public class PersonServiceImpl implements PersonService {
       throw new ApiBadRequestException("Birthday cannot be empty");
     } else if (!isValidBirthdayPattern(birthday)) {
       throw new ApiBadRequestException("Birthday needs to be in format:DD.MM.YYYY");
-    } else if (Integer.parseInt(birthday.substring(birthday.length() - 4))
-        > LocalDate.now().getYear()) {
+    } else if (LocalDate.now().isBefore(birthdayStringParseToLocalDate(birthday))) {
       throw new ApiBadRequestException("Person is not born yet");
     }
   }
