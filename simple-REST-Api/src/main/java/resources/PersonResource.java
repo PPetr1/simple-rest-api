@@ -9,13 +9,13 @@ import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import services.PersonService;
 
-@Path("/person")
+@Path("")
 public class PersonResource {
 
   @EJB private PersonService personService;
 
   @POST
-  @Path("/create")
+  @Path("/createPerson")
   @Consumes(MediaType.APPLICATION_JSON)
   @Produces(MediaType.APPLICATION_JSON)
   public Response createPerson(CreatePersonRequestDTO requestDTO) {
@@ -26,7 +26,7 @@ public class PersonResource {
   }
 
   @DELETE
-  @Path("/delete")
+  @Path("/deletePerson")
   @Consumes(MediaType.APPLICATION_JSON)
   @Produces(MediaType.APPLICATION_JSON)
   public Response deletePerson(DeletePersonRequestDTO requestDTO) {
