@@ -111,32 +111,38 @@ public class PersonService {
     }
   }
 
-  @Transactional
   public Object getPersonForName(GetPersonForNameRequestDTO requestDTO) {
-    List<Person> personList =
-        entityManager
-            .createQuery("SELECT p FROM Person p WHERE p.name LIKE :name", Person.class)
-            .setParameter("name", requestDTO.getName())
-            .getResultList();
+    List<Person> personList = getPeopleByNameQuery(requestDTO.getName());
     validateResponseSinglePerson(personList);
     return personToPersonResponseDTO(personList.get(0));
+  }
+
+  @Transactional
+  List<Person> getPeopleByNameQuery(String name) {
+    return entityManager
+        .createQuery("SELECT p FROM Person p WHERE p.name LIKE :name", Person.class)
+        .setParameter("name", name)
+        .getResultList();
   }
 
   void validateResponseSinglePerson(List<Person> personList) {
     if (personList.isEmpty()) {
       throw new ApiBadRequestException("There is no person by the provided name");
     } else if (personList.size() > 1) {
-      throw new ApiBadRequestException("There are multiple people with the same name, please use different endpoint");
+      throw new ApiBadRequestException(
+          "There are multiple people with the same name, please use /api/getPeopleByName");
     }
   }
 
   PersonResponseDTO personToPersonResponseDTO(Person person) {
-    return new PersonResponseDTO(person.getName(), person.getGender().toString(), birthdayFixResponseFormat(person.getBirthday().toString()));
+    return new PersonResponseDTO(
+        person.getName(),
+        person.getGender().toString(),
+        birthdayFixResponseFormat(person.getBirthday().toString()));
   }
 
   String birthdayFixResponseFormat(String birthday) {
     String[] arr = birthday.split("-");
     return arr[2] + "." + arr[1] + "." + arr[0];
   }
-
 }
