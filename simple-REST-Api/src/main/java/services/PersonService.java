@@ -1,6 +1,7 @@
 package services;
 
 import dtos.CreatePersonRequestDTO;
+import dtos.DeletePersonRequestDTO;
 import enums.Gender;
 import exceptions.ApiBadRequestException;
 import jakarta.ejb.Stateless;
@@ -11,6 +12,7 @@ import models.Person;
 
 import java.time.LocalDate;
 import java.util.Date;
+import java.util.Optional;
 import java.util.regex.Pattern;
 
 @Stateless
@@ -92,5 +94,17 @@ public class PersonService {
 
   boolean isValidNamePattern(String name) {
     return Pattern.compile("^[a-zA-Z ěĚšŠčČřŘžŽýÝáÁíÍéÉůŮúÚöÖ]+$").matcher(name).matches();
+  }
+
+  @Transactional
+  public void deletePerson(DeletePersonRequestDTO requestDTO) {
+    Optional<Person> optionalPerson =
+        Optional.ofNullable(entityManager.find(Person.class, requestDTO.getPersonId()));
+    if (optionalPerson.isPresent()) {
+      entityManager.remove(optionalPerson.get());
+    } else {
+      throw new ApiBadRequestException(
+          "Provided personId: " + requestDTO.getPersonId() + " doesn't exist");
+    }
   }
 }
