@@ -91,6 +91,6 @@ public class PersonService {
   }
 
   boolean isValidNamePattern(String name) {
-    return Pattern.compile("^[a-zA-Z ]+$").matcher(name).matches();
+    return Pattern.compile("^[a-zA-Z ěĚšŠčČřŘžŽýÝáÁíÍéÉůŮúÚöÖ]+$").matcher(name).matches();
   }
 }
