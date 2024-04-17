@@ -1,9 +1,6 @@
 package services;
 
-import dtos.CreatePersonRequestDTO;
-import dtos.DeletePersonRequestDTO;
-import dtos.GetPersonForNameRequestDTO;
-import dtos.PersonResponseDTO;
+import dtos.*;
 import enums.Gender;
 import exceptions.ApiBadRequestException;
 import jakarta.ejb.Stateless;
@@ -17,6 +14,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 @Stateless
 public class PersonService {
@@ -112,6 +110,10 @@ public class PersonService {
   }
 
   public Object getPersonForName(GetPersonForNameRequestDTO requestDTO) {
+    if (requestDTO.getName() == null) {
+      throwNameFieldIsMissing();
+    }
+    validateNameFormat(requestDTO.getName());
     List<Person> personList = getPeopleByNameQuery(requestDTO.getName());
     validateResponseSinglePerson(personList);
     return personToPersonResponseDTO(personList.get(0));
@@ -127,7 +129,7 @@ public class PersonService {
 
   void validateResponseSinglePerson(List<Person> personList) {
     if (personList.isEmpty()) {
-      throw new ApiBadRequestException("There is no person by the provided name");
+      throwNoPersonByTheName();
     } else if (personList.size() > 1) {
       throw new ApiBadRequestException(
           "There are multiple people with the same name, please use /api/getPeopleByName");
@@ -144,5 +146,41 @@ public class PersonService {
   String birthdayFixResponseFormat(String birthday) {
     String[] arr = birthday.split("-");
     return arr[2] + "." + arr[1] + "." + arr[0];
+  }
+
+  public GetPeopleByNameResponseDTO getPeopleByName(GetPersonForNameRequestDTO requestDTO) {
+    if (requestDTO.getName() == null) {
+      throwNameFieldIsMissing();
+    }
+    validateNameFormat(requestDTO.getName());
+    List<Person> personList = getPeopleByNameQuery(requestDTO.getName());
+    validateGetPeopleByNameResponse(personList);
+    return personToGetPeopleByNameResponseDTO(personList);
+  }
+
+  private GetPeopleByNameResponseDTO personToGetPeopleByNameResponseDTO(List<Person> personList) {
+    return new GetPeopleByNameResponseDTO(
+        personList.stream()
+            .map(
+                person ->
+                    new PersonResponseDTO(
+                        person.getName(),
+                        person.getGender().toString(),
+                        birthdayFixResponseFormat(person.getBirthday().toString())))
+            .collect(Collectors.toList()));
+  }
+
+  void validateGetPeopleByNameResponse(List<Person> personList) {
+    if (personList.isEmpty()) {
+      throwNoPersonByTheName();
+    }
+  }
+
+  void throwNoPersonByTheName() {
+    throw new ApiBadRequestException("There is no person by the provided name");
+  }
+
+  void throwNameFieldIsMissing() {
+    throw new ApiBadRequestException("name field is missing");
   }
 }
