@@ -51,4 +51,11 @@ public class PersonResource {
   public Response getPeopleByName(GetPersonForNameRequestDTO requestDTO) {
     return Response.status(200).entity(personService.getPeopleByName(requestDTO)).build();
   }
+
+  @GET
+  @Path("/getAllPersons")
+  @Produces(MediaType.APPLICATION_JSON)
+  public Response getAllPersons() {
+    return Response.status(200).entity(personService.getAllPersons()).build();
+  }
 }
