@@ -16,7 +16,7 @@ This project was made in Jakarta EE 10.0 version with REST service template writ
 
 ### POST /api/createPerson
 
-Creates a Person entity and saves it into db 
+Creates a Person entity, saves it into db and send it back to client as json
 
 #### Sample Request
 ```json
@@ -137,6 +137,7 @@ Gets all Person entities by the same name and send them as json
 Updates name of Person with the provided personId
 
 #### Sample Request
+```json
 {
     "name" : "John Smith",
     "personId" : 2
