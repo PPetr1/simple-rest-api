@@ -1,6 +1,5 @@
 package dtos;
 
-
 import java.util.Objects;
 
 public class PersonResponseDTO {
@@ -55,7 +54,10 @@ public class PersonResponseDTO {
     if (this == o) return true;
     if (!(o instanceof PersonResponseDTO)) return false;
     PersonResponseDTO that = (PersonResponseDTO) o;
-    return getId() == that.getId() && Objects.equals(getName(), that.getName()) && Objects.equals(getGender(), that.getGender()) && Objects.equals(getBirthday(), that.getBirthday());
+    return getId() == that.getId()
+        && Objects.equals(getName(), that.getName())
+        && Objects.equals(getGender(), that.getGender())
+        && Objects.equals(getBirthday(), that.getBirthday());
   }
 
   @Override

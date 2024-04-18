@@ -44,7 +44,9 @@ public class CreatePersonRequestDTO {
     if (this == o) return true;
     if (!(o instanceof CreatePersonRequestDTO)) return false;
     CreatePersonRequestDTO that = (CreatePersonRequestDTO) o;
-    return Objects.equals(getName(), that.getName()) && Objects.equals(getGender(), that.getGender()) && Objects.equals(getBirthday(), that.getBirthday());
+    return Objects.equals(getName(), that.getName())
+        && Objects.equals(getGender(), that.getGender())
+        && Objects.equals(getBirthday(), that.getBirthday());
   }
 
   @Override
