@@ -102,14 +102,14 @@ class PersonServiceImplTest {
   void validateNameFormat_isEmptyThrows() {
     String name = "";
 
-    assertThrows(ApiBadRequestException.class,() -> personServiceImpl.validateGenderFormat(name));
+    assertThrows(ApiBadRequestException.class,() -> personServiceImpl.validateNameFormat(name));
   }
 
   @Test
   void validateNameFormat_maxFiftyCharactersThrows() {
     String name = "A".repeat(51);
 
-    assertThrows(ApiBadRequestException.class,() -> personServiceImplSpy.validateGenderFormat(name));
+    assertThrows(ApiBadRequestException.class,() -> personServiceImplSpy.validateNameFormat(name));
   }
 
   @Test
