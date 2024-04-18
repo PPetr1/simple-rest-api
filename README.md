@@ -150,3 +150,25 @@ Updates name of Person with the provided personId
     "message": "Person was updated successfully"
 }
 ```
+
+## 3. Exceptions
+
+Application also has various validations for incoming requests with custom error messages
+
+### POST /api/createPerson
+
+#### Sample Request
+```json
+{
+    "name" : "John Doe123",
+    "gender" : "MALE",
+    "birthday" : "05.2.2024"
+}
+```
+
+#### Sample Response
+```json
+{
+  "errorMessage": "Name cannot contain numbers or symbols"
+}
+```
