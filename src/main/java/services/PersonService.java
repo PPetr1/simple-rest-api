@@ -42,7 +42,7 @@ public interface PersonService {
   @Transactional
   Optional<Person> findPersonById(long personId);
 
-  Object getPersonForName(GetPersonForNameRequestDTO requestDTO);
+  PersonResponseDTO getPersonForName(GetPersonForNameRequestDTO requestDTO);
 
   @Transactional
   List<Person> getPeopleByNameQuery(String name);

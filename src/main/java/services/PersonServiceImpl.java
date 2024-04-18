@@ -141,7 +141,7 @@ public class PersonServiceImpl implements PersonService {
   }
 
   @Override
-  public Object getPersonForName(GetPersonForNameRequestDTO requestDTO) {
+  public PersonResponseDTO getPersonForName(GetPersonForNameRequestDTO requestDTO) {
     if (requestDTO.getName() == null) {
       throwNameFieldIsMissing();
     }
