@@ -37,7 +37,7 @@ public interface PersonService {
   @Transactional
   void deletePersonQuery(Person person);
 
-  void validateDeletePersonRequestDTO(DeletePersonRequestDTO requestDTO);
+  void validateDeletePersonRequestDTO(long personId);
 
   @Transactional
   Optional<Person> findPersonById(long personId);

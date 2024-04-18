@@ -112,7 +112,7 @@ public class PersonServiceImpl implements PersonService {
 
   @Override
   public void deletePerson(DeletePersonRequestDTO requestDTO) {
-    validateDeletePersonRequestDTO(requestDTO);
+    validateDeletePersonRequestDTO(requestDTO.getPersonId());
     Optional<Person> optionalPerson = findPersonById(requestDTO.getPersonId());
     if (optionalPerson.isPresent()) {
       deletePersonQuery(optionalPerson.get());
@@ -128,8 +128,8 @@ public class PersonServiceImpl implements PersonService {
   }
 
   @Override
-  public void validateDeletePersonRequestDTO(DeletePersonRequestDTO requestDTO) {
-    if (requestDTO.getPersonId() == 0) {
+  public void validateDeletePersonRequestDTO(long personId) {
+    if (personId == 0) {
       throwProvideValidPersonId();
     }
   }
