@@ -2,6 +2,8 @@ package models;
 
 import enums.Gender;
 import jakarta.persistence.*;
+
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.Objects;
 
@@ -13,13 +15,13 @@ public class Person {
 
   private String name;
   @Temporal(TemporalType.DATE)
-  private Date birthday;
+  private LocalDate birthday;
   @Enumerated(EnumType.STRING)
   private Gender gender;
 
   public Person() {}
 
-  public Person(String name, Date birthday, Gender gender) {
+  public Person(String name, LocalDate birthday, Gender gender) {
     this.name = name;
     this.birthday = birthday;
     this.gender = gender;
@@ -41,11 +43,11 @@ public class Person {
     this.name = name;
   }
 
-  public Date getBirthday() {
+  public LocalDate getBirthday() {
     return birthday;
   }
 
-  public void setBirthday(Date birthday) {
+  public void setBirthday(LocalDate birthday) {
     this.birthday = birthday;
   }
 
