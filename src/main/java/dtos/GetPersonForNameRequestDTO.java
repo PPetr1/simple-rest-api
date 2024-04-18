@@ -1,5 +1,7 @@
 package dtos;
 
+import java.util.Objects;
+
 public class GetPersonForNameRequestDTO {
   private String name;
 
@@ -15,5 +17,18 @@ public class GetPersonForNameRequestDTO {
 
   public void setName(String name) {
     this.name = name;
+  }
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) return true;
+    if (!(o instanceof GetPersonForNameRequestDTO)) return false;
+    GetPersonForNameRequestDTO that = (GetPersonForNameRequestDTO) o;
+    return Objects.equals(getName(), that.getName());
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(getName());
   }
 }

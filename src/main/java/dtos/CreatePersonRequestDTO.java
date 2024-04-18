@@ -1,5 +1,7 @@
 package dtos;
 
+import java.util.Objects;
+
 public class CreatePersonRequestDTO {
   private String name;
   private String gender;
@@ -35,5 +37,18 @@ public class CreatePersonRequestDTO {
 
   public void setBirthday(String birthday) {
     this.birthday = birthday;
+  }
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) return true;
+    if (!(o instanceof CreatePersonRequestDTO)) return false;
+    CreatePersonRequestDTO that = (CreatePersonRequestDTO) o;
+    return Objects.equals(getName(), that.getName()) && Objects.equals(getGender(), that.getGender()) && Objects.equals(getBirthday(), that.getBirthday());
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(getName(), getGender(), getBirthday());
   }
 }

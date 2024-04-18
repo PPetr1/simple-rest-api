@@ -1,5 +1,7 @@
 package dtos;
 
+import java.util.Objects;
+
 public class UpdatePersonRequestDTO {
   private long personId;
   private String name;
@@ -25,5 +27,18 @@ public class UpdatePersonRequestDTO {
 
   public void setName(String name) {
     this.name = name;
+  }
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) return true;
+    if (!(o instanceof UpdatePersonRequestDTO)) return false;
+    UpdatePersonRequestDTO that = (UpdatePersonRequestDTO) o;
+    return getPersonId() == that.getPersonId() && Objects.equals(getName(), that.getName());
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(getPersonId(), getName());
   }
 }
