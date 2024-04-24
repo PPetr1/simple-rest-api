@@ -137,7 +137,7 @@ public class PersonServiceImpl implements PersonService {
   }
 
   @Override
-  public PersonResponseDTO getPersonForName(GetPersonForNameRequestDTO requestDTO) {
+  public PersonResponseDTO getPersonByName(GetPersonByNameRequestDTO requestDTO) {
     if (requestDTO.getName() == null) {
       throwNameFieldIsMissing();
     }
@@ -181,7 +181,7 @@ public class PersonServiceImpl implements PersonService {
   }
 
   @Override
-  public PersonResponseDTOList getPeopleByName(GetPersonForNameRequestDTO requestDTO) {
+  public PersonResponseDTOList getPeopleByName(GetPersonByNameRequestDTO requestDTO) {
     if (requestDTO.getName() == null) {
       throwNameFieldIsMissing();
     }
@@ -225,21 +225,21 @@ public class PersonServiceImpl implements PersonService {
   }
 
   @Override
-  public PersonResponseDTOList getAllPersons() {
-    List<Person> personList = getAllPersonsQuery();
-    validateGetAllPersonsResponse(personList);
+  public PersonResponseDTOList getAllPeople() {
+    List<Person> personList = getAllPeopleQuery();
+    validateGetAllPeopleResponse(personList);
     return personListToPersonResponseDTOList(personList);
   }
 
   @Override
-  public void validateGetAllPersonsResponse(List<Person> personList) {
+  public void validateGetAllPeopleResponse(List<Person> personList) {
     if (personList.isEmpty()) {
       throw new ApiBadRequestException("There are no person entities");
     }
   }
 
   @Override
-  public List<Person> getAllPersonsQuery() {
+  public List<Person> getAllPeopleQuery() {
     return entityManager.createQuery("SELECT p FROM Person p", Person.class).getResultList();
   }
 

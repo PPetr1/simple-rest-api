@@ -10,12 +10,10 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -151,10 +149,10 @@ class PersonServiceImplTest {
   }
 
   @Test
-  void getPersonForName_missingFieldThrows() {
-    GetPersonForNameRequestDTO requestDTO = mock(GetPersonForNameRequestDTO.class);
+  void getPersonByName_missingFieldThrows() {
+    GetPersonByNameRequestDTO requestDTO = mock(GetPersonByNameRequestDTO.class);
 
-    assertThrows(ApiBadRequestException.class, () -> personServiceImpl.getPersonForName(requestDTO));
+    assertThrows(ApiBadRequestException.class, () -> personServiceImpl.getPersonByName(requestDTO));
   }
 
   @Test
@@ -192,7 +190,7 @@ class PersonServiceImplTest {
 
   @Test
   void getPeopleByName_nameIsMissingThrows() {
-    GetPersonForNameRequestDTO requestDTO = mock(GetPersonForNameRequestDTO.class);
+    GetPersonByNameRequestDTO requestDTO = mock(GetPersonByNameRequestDTO.class);
 
     assertThrows(ApiBadRequestException.class, () -> personServiceImpl.getPeopleByName(requestDTO));
   }
@@ -201,7 +199,7 @@ class PersonServiceImplTest {
   void validateGetAllPersonsResponse_isEmptyThrows() {
     List<Person> personList = new ArrayList<>();
 
-    assertThrows(ApiBadRequestException.class, () -> personServiceImpl.validateGetAllPersonsResponse(personList));
+    assertThrows(ApiBadRequestException.class, () -> personServiceImpl.validateGetAllPeopleResponse(personList));
   }
 
   @Test

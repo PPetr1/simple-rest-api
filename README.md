@@ -37,7 +37,7 @@ Creates a Person entity, saves it into db and send it back to client as json
 }
 ```
 
-### GET /api/getAllPersons 
+### GET /api/getAllPeople 
 
 Gets all the Person entities from db and send them as json
 
@@ -79,7 +79,7 @@ Deletes Person entity from db based on provided personId
 }
 ```
 
-### GET /api/getPersonForName
+### GET /api/getPersonByName
 
 Gets singular Person from db and send it as json. If there are more people by the same name
 use /api/getPeopleByName

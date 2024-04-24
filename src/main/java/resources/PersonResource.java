@@ -32,26 +32,26 @@ public class PersonResource {
   }
 
   @GET
-  @Path("/getPersonForName")
+  @Path("/getPersonByName")
   @Consumes(MediaType.APPLICATION_JSON)
   @Produces(MediaType.APPLICATION_JSON)
-  public Response getPersonForName(GetPersonForNameRequestDTO requestDTO) {
-    return Response.status(200).entity(personService.getPersonForName(requestDTO)).build();
+  public Response getPersonForName(GetPersonByNameRequestDTO requestDTO) {
+    return Response.status(200).entity(personService.getPersonByName(requestDTO)).build();
   }
 
   @GET
   @Path("/getPeopleByName")
   @Consumes(MediaType.APPLICATION_JSON)
   @Produces(MediaType.APPLICATION_JSON)
-  public Response getPeopleByName(GetPersonForNameRequestDTO requestDTO) {
+  public Response getPeopleByName(GetPersonByNameRequestDTO requestDTO) {
     return Response.status(200).entity(personService.getPeopleByName(requestDTO)).build();
   }
 
   @GET
-  @Path("/getAllPersons")
+  @Path("/getAllPeople")
   @Produces(MediaType.APPLICATION_JSON)
   public Response getAllPersons() {
-    return Response.status(200).entity(personService.getAllPersons()).build();
+    return Response.status(200).entity(personService.getAllPeople()).build();
   }
 
   @POST

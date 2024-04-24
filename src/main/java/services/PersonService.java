@@ -41,7 +41,7 @@ public interface PersonService {
   @Transactional
   Optional<Person> findPersonById(long personId);
 
-  PersonResponseDTO getPersonForName(GetPersonForNameRequestDTO requestDTO);
+  PersonResponseDTO getPersonByName(GetPersonByNameRequestDTO requestDTO);
 
   @Transactional
   List<Person> getPeopleByNameQuery(String name);
@@ -52,7 +52,7 @@ public interface PersonService {
 
   String birthdayFixResponseFormat(String birthday);
 
-  PersonResponseDTOList getPeopleByName(GetPersonForNameRequestDTO requestDTO);
+  PersonResponseDTOList getPeopleByName(GetPersonByNameRequestDTO requestDTO);
 
   PersonResponseDTOList personListToPersonResponseDTOList(List<Person> personList);
 
@@ -66,12 +66,12 @@ public interface PersonService {
 
   void throwProvideValidPersonId();
 
-  PersonResponseDTOList getAllPersons();
+  PersonResponseDTOList getAllPeople();
 
-  void validateGetAllPersonsResponse(List<Person> personList);
+  void validateGetAllPeopleResponse(List<Person> personList);
 
   @Transactional
-  List<Person> getAllPersonsQuery();
+  List<Person> getAllPeopleQuery();
 
   void updatePerson(UpdatePersonRequestDTO requestDTO);
 

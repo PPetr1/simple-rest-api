@@ -2,12 +2,12 @@ package dtos;
 
 import java.util.Objects;
 
-public class GetPersonForNameRequestDTO {
+public class GetPersonByNameRequestDTO {
   private String name;
 
-  public GetPersonForNameRequestDTO() {}
+  public GetPersonByNameRequestDTO() {}
 
-  public GetPersonForNameRequestDTO(String name) {
+  public GetPersonByNameRequestDTO(String name) {
     this.name = name;
   }
 
@@ -22,8 +22,8 @@ public class GetPersonForNameRequestDTO {
   @Override
   public boolean equals(Object o) {
     if (this == o) return true;
-    if (!(o instanceof GetPersonForNameRequestDTO)) return false;
-    GetPersonForNameRequestDTO that = (GetPersonForNameRequestDTO) o;
+    if (!(o instanceof GetPersonByNameRequestDTO)) return false;
+    GetPersonByNameRequestDTO that = (GetPersonByNameRequestDTO) o;
     return Objects.equals(getName(), that.getName());
   }
 
