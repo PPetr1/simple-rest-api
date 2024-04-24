@@ -54,7 +54,7 @@ public class PersonResource {
     return Response.status(200).entity(personService.getAllPersons()).build();
   }
 
-  @PUT
+  @POST
   @Path("/updatePerson")
   @Consumes(MediaType.APPLICATION_JSON)
   @Produces(MediaType.APPLICATION_JSON)
