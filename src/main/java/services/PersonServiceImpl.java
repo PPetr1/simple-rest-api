@@ -6,7 +6,6 @@ import exceptions.ApiBadRequestException;
 import jakarta.ejb.Stateless;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
-import jakarta.transaction.Transactional;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
@@ -31,7 +30,6 @@ public class PersonServiceImpl implements PersonService {
   }
 
   @Override
-  @Transactional
   public PersonResponseDTO savePersonQuery(Person person) {
     entityManager.persist(person);
     entityManager.flush();
@@ -122,7 +120,6 @@ public class PersonServiceImpl implements PersonService {
   }
 
   @Override
-  @Transactional
   public void deletePersonQuery(Person person) {
     entityManager.remove(person);
   }
@@ -135,7 +132,6 @@ public class PersonServiceImpl implements PersonService {
   }
 
   @Override
-  @Transactional
   public Optional<Person> findPersonById(long personId) {
     return Optional.ofNullable(entityManager.find(Person.class, personId));
   }
@@ -152,7 +148,6 @@ public class PersonServiceImpl implements PersonService {
   }
 
   @Override
-  @Transactional
   public List<Person> getPeopleByNameQuery(String name) {
     return entityManager
         .createQuery("SELECT p FROM Person p WHERE p.name LIKE :name", Person.class)
@@ -244,7 +239,6 @@ public class PersonServiceImpl implements PersonService {
   }
 
   @Override
-  @Transactional
   public List<Person> getAllPersonsQuery() {
     return entityManager.createQuery("SELECT p FROM Person p", Person.class).getResultList();
   }
