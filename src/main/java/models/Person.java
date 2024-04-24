@@ -6,15 +6,20 @@ import java.time.LocalDate;
 import java.util.Objects;
 
 @Entity
+@Table(name = "People")
 public class Person {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
+  @Column(name = "Id")
   private long id;
 
+  @Column(name = "Name")
   private String name;
   @Temporal(TemporalType.DATE)
+  @Column(name = "Date_of_birth")
   private LocalDate birthday;
   @Enumerated(EnumType.STRING)
+  @Column(name = "Gender")
   private Gender gender;
 
   public Person() {}
