@@ -7,6 +7,8 @@ import jakarta.ejb.Stateless;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.List;
 import java.util.Optional;
 import java.util.regex.Pattern;
@@ -51,8 +53,12 @@ public class PersonServiceImpl implements PersonService {
   @Override
   public LocalDate birthdayStringParseToLocalDate(String birthday) {
     String[] arr = birthday.split("\\.");
-    return LocalDate.of(
-        Integer.parseInt(arr[2]), Integer.parseInt(arr[1]), Integer.parseInt(arr[0]));
+    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
+    try {
+      return LocalDate.parse(birthday, formatter);
+    } catch (DateTimeParseException e) {
+      throw new ApiBadRequestException("Birthday needs to be in format:DD.MM.YYYY");
+    }
   }
 
   @Override
@@ -171,13 +177,13 @@ public class PersonServiceImpl implements PersonService {
         person.getId(),
         person.getName(),
         person.getGender().toString(),
-        birthdayFixResponseFormat(person.getBirthday().toString()));
+        parseLocalDateToStringBirthday(person.getBirthday()));
   }
 
   @Override
-  public String birthdayFixResponseFormat(String birthday) {
-    String[] arr = birthday.split("-");
-    return arr[2] + "." + arr[1] + "." + arr[0];
+  public String parseLocalDateToStringBirthday(LocalDate birthday) {
+    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
+    return birthday.format(formatter);
   }
 
   @Override

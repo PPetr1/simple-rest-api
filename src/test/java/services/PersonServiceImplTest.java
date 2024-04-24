@@ -1,9 +1,18 @@
 package services;
 
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.Mockito.*;
+
 import dtos.*;
 import enums.Gender;
 import exceptions.ApiBadRequestException;
 import jakarta.persistence.EntityManager;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 import models.Person;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -11,15 +20,6 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-
-import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.ArgumentMatchers.anyString;
-import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 class PersonServiceImplTest {
@@ -156,10 +156,10 @@ class PersonServiceImplTest {
   }
 
   @Test
-  void birthdayFixResponseFormat_returnsCorrectFormat() {
-    String dateString = "2017-10-15";
+  void parseLocalDateToStringBirthday_returnsCorrectFormat() {
+    LocalDate localDate = LocalDate.of(2017,10,15);
 
-    assertEquals("15.10.2017", personServiceImpl.birthdayFixResponseFormat(dateString));
+    assertEquals("15.10.2017", personServiceImpl.parseLocalDateToStringBirthday(localDate));
   }
 
   @Test
@@ -169,7 +169,9 @@ class PersonServiceImplTest {
     when(person.getGender()).thenReturn(Gender.MALE);
     when(person.getName()).thenReturn("name");
     when(person.getBirthday()).thenReturn(LocalDate.of(2017,10,15));
-    when(personServiceImplSpy.birthdayFixResponseFormat(LocalDate.of(2017,10,15).toString())).thenReturn("15.10.2017");
+    when(personServiceImplSpy.parseLocalDateToStringBirthday(LocalDate.of(2017,10,15)))
+            .thenReturn(LocalDate.of(2017,10,15)
+                    .format(DateTimeFormatter.ofPattern("dd.MM.yyyy")));
 
     PersonResponseDTO expected = new PersonResponseDTO(1L, "name", "MALE", "15.10.2017");
 

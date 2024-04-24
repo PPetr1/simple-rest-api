@@ -50,7 +50,7 @@ public interface PersonService {
 
   PersonResponseDTO personToPersonResponseDTO(Person person);
 
-  String birthdayFixResponseFormat(String birthday);
+  String parseLocalDateToStringBirthday(LocalDate birthday);
 
   PersonResponseDTOList getPeopleByName(GetPersonByNameRequestDTO requestDTO);
 
